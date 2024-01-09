@@ -16,10 +16,10 @@ type Tree struct {
 type INode interface {
 	// GetTitle 获取显示名字
 	GetTitle() string
-	// GetId获取id
-	GetId() int
+	// GetId 获取id
+	GetId() string
 	// GetFatherId 获取父id
-	GetFatherId() int
+	GetFatherId() string
 	// GetData 获取附加数据
 	GetData() interface{}
 	// IsRoot 判断当前节点是否是顶层根节点
@@ -113,7 +113,7 @@ func recursiveTree(tree *Tree, nodes, selectedNodes []INode) {
 // nodes 要查询父节点的子节点数组
 // allTree 所有节点数组
 func FindRelationNode(nodes, allNodes []INode) (respNodes []INode) {
-	nodeMap := make(map[int]INode)
+	nodeMap := make(map[string]INode)
 	for _, v := range nodes {
 		recursiveFindRelationNode(nodeMap, allNodes, v, 0)
 	}
@@ -130,7 +130,7 @@ func FindRelationNode(nodes, allNodes []INode) (respNodes []INode) {
 // allNodes 所有节点
 // node 递归节点
 // t 递归查找类型：0 查找父、子节点；1 只查找父节点；2 只查找子节点
-func recursiveFindRelationNode(nodeMap map[int]INode, allNodes []INode, node INode, t int) {
+func recursiveFindRelationNode(nodeMap map[string]INode, allNodes []INode, node INode, t int) {
 	nodeMap[node.GetId()] = node
 	for _, v := range allNodes {
 		if _, ok := nodeMap[v.GetId()]; ok {
